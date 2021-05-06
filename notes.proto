@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+service Notes {
+    rpc createNote(NoteItem) returns (NoteItem);
+    rpc getNotes(voidNoParam) returns (NoteItems);
+    rpc getNotesStream(voidNoParam) returns (stream NoteItem);
+}
+
+message voidNoParam {}
+
+message NoteItem {
+    int32 id = 1;
+    string text = 2;
+    string date = 3;
+}
+
+message NoteItems {
+    repeated NoteItem items = 1;
+}
