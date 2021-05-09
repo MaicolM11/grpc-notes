@@ -21,6 +21,7 @@ const client = new NoteService('localhost:40000',   grpc.credentials.createInsec
 function createNote(text){
     client.createNote({"text": text}, (err, response) => {
         getNotes()
+        getNotesStream()
     })
 }
 
@@ -39,7 +40,6 @@ function getNotesStream(){
 }
 
 app.post('/note',(req,res)=>{
-    console.log()
     createNote(req.body.text)
     res.sendStatus(200)
 })

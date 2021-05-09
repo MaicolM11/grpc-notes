@@ -1,6 +1,8 @@
 const grpc = require("grpc");
 const notesProto = grpc.load('notes.proto')
 
+var sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms*1000));
+
 const server = new grpc.Server();
 const notes = []
 
@@ -23,7 +25,13 @@ function getNotes(call, callback) {
     callback(null, {"items": notes})   
 }
 
-function getNotesStream(call, callback) { 
-    notes.forEach(t => call.write(t));
+
+
+async function getNotesStream(call, callback) { 
+    for (let i = 0; i < notes.length; i++) {
+        await sleep(1)
+        call.write(notes[i])
+    }
     call.end();
 }
+
